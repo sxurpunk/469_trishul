@@ -1,0 +1,79 @@
+[gd_scene load_steps=13 format=3 uid="uid://cjj2okqnbs87b"]
+
+[ext_resource type="Texture2D" uid="uid://c8arnlq67qi7" path="res://third_person_controller_assets-main/textures/grids/Dark/texture_05.png" id="1_0okat"]
+[ext_resource type="Texture2D" uid="uid://b58xv1joypxo5" path="res://third_person_controller_assets-main/textures/grids/Orange/texture_09.png" id="2_s11gy"]
+[ext_resource type="Texture2D" uid="uid://cm5m7nr7dugjd" path="res://third_person_controller_assets-main/textures/grids/Purple/texture_09.png" id="3_tu3m6"]
+[ext_resource type="Texture2D" uid="uid://djg8y25y06h5n" path="res://third_person_controller_assets-main/textures/grids/Green/texture_09.png" id="4_svbtb"]
+[ext_resource type="PackedScene" uid="uid://5skh5ty5s1ka" path="res://scenes/playerScene.tscn" id="5_7ko60"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3m3nq"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_peaf8"]
+sky_material = SubResource("ProceduralSkyMaterial_3m3nq")
+
+[sub_resource type="Environment" id="Environment_7dxee"]
+background_mode = 2
+sky = SubResource("Sky_peaf8")
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(1, 1, 1, 1)
+fog_density = 0.001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g437q"]
+albedo_texture = ExtResource("1_0okat")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8b1tu"]
+albedo_texture = ExtResource("2_s11gy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vct2d"]
+albedo_texture = ExtResource("3_tu3m6")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wj53o"]
+albedo_texture = ExtResource("4_svbtb")
+uv1_triplanar = true
+
+[node name="gameSpace" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7dxee")
+
+[node name="gameMap" type="Node3D" parent="."]
+
+[node name="gameFloor" type="CSGBox3D" parent="gameMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_g437q")
+use_collision = true
+size = Vector3(1000, 1, 1000)
+
+[node name="boxSmall" type="CSGBox3D" parent="gameMap"]
+transform = Transform3D(0.788902, 0, 0.614519, 0, 1, 0, -0.614519, 0, 0.788902, -8.95795, 0.5, 5.82332)
+material_override = SubResource("StandardMaterial3D_8b1tu")
+use_collision = true
+
+[node name="boxMid" type="CSGBox3D" parent="gameMap"]
+transform = Transform3D(0.788902, 0, 0.614519, 0, 1, 0, -0.614519, 0, 0.788902, -0.265121, 1, -14.685)
+material_override = SubResource("StandardMaterial3D_vct2d")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="boxLarge" type="CSGBox3D" parent="gameMap"]
+transform = Transform3D(0.76112, 0, -0.648611, 0, 1, 0, 0.648611, 0, 0.76112, 9.01718, 1.5, 8.8741)
+material_override = SubResource("StandardMaterial3D_wj53o")
+use_collision = true
+size = Vector3(3, 3, 3)
+
+[node name="PlayerScene" parent="." instance=ExtResource("5_7ko60")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0106819, -0.00365996, -0.00170648)
+walkSpeed = 3.0
+horizontalSens = 0.2
+verticalSens = 0.2
