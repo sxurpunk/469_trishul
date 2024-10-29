@@ -1,0 +1,92 @@
+[gd_scene load_steps=16 format=3 uid="uid://dykkwtsqbl4pb"]
+
+[ext_resource type="Script" path="res://Script/level_1.gd" id="1_638w5"]
+[ext_resource type="PackedScene" uid="uid://ce77hg0r5cf6s" path="res://pause_menu.tscn" id="2_m0kdb"]
+[ext_resource type="PackedScene" uid="uid://cjxws8qtmarc" path="res://player.tscn" id="4_egbxy"]
+[ext_resource type="PackedScene" uid="uid://5w5iuhon7m5s" path="res://enemy.tscn" id="4_tb54p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pjodr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bw4pn"]
+albedo_color = Color(0.823529, 0.690196, 0.0470588, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5vi2c"]
+material = SubResource("StandardMaterial3D_bw4pn")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_4vijd"]
+vertices = PackedVector3Array(-1, -0.4, -10.75, 0.25, -0.4, -11, 0.25, -0.4, -24.5, -24.5, -0.4, -24.5, -24.5, -0.4, -8.75, -1, -0.4, -8.75, 1.25, -0.4, -10.75, 24.5, -0.4, -9.5, 24.5, -0.4, -24.5, 1.25, -0.4, -9.25, 1.25, -0.4, 9.25, 24.5, -0.4, 9.5, -24.5, -0.4, 8.75, -1, -0.4, 8.75, 0.25, -0.4, 24.5, 0.25, -0.4, 11, -1, -0.4, 10.75, -24.5, -0.4, 24.5, 1.25, -0.4, 10.75, 24.5, -0.4, 24.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(0, 5, 4), PackedInt32Array(1, 2, 6), PackedInt32Array(6, 2, 8), PackedInt32Array(6, 8, 7), PackedInt32Array(7, 9, 6), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 11), PackedInt32Array(4, 5, 12), PackedInt32Array(12, 5, 13), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(16, 17, 12), PackedInt32Array(12, 13, 16), PackedInt32Array(15, 18, 14), PackedInt32Array(14, 18, 19), PackedInt32Array(19, 18, 11), PackedInt32Array(18, 10, 11)]
+cell_height = 0.05
+agent_max_climb = 0.05
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qvksn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o3fx3"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6uiyg"]
+albedo_color = Color(0.12549, 0.356863, 0.054902, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5hx25"]
+material = SubResource("StandardMaterial3D_6uiyg")
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pksgc"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8qc2e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b2car"]
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_638w5")
+
+[node name="Box" type="RigidBody3D" parent="."]
+transform = Transform3D(0.839563, -0.375385, -0.392708, 0.543262, 0.580124, 0.606895, 0, -0.722871, 0.690983, 10.3252, 3.60072, 9.72803)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+shape = SubResource("BoxShape3D_pjodr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box"]
+transform = Transform3D(0.999994, 0.000441183, -0.00351064, -0.000443346, 1, -0.000637531, 0.00351036, 0.000639081, 0.999994, 0.0288782, -0.032383, -0.00443029)
+mesh = SubResource("BoxMesh_5vi2c")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." groups=["enemies"]]
+navigation_mesh = SubResource("NavigationMesh_4vijd")
+
+[node name="Floor" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+physics_material_override = SubResource("PhysicsMaterial_qvksn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
+shape = SubResource("BoxShape3D_o3fx3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Floor"]
+mesh = SubResource("BoxMesh_5hx25")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 10.0132, 0, 0, 0, 20.9208, 0, 4.39789, 0)
+mesh = SubResource("BoxMesh_pksgc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/MeshInstance3D"]
+physics_material_override = SubResource("PhysicsMaterial_8qc2e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_b2car")
+
+[node name="Player" parent="." instance=ExtResource("4_egbxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.86, 2.3403, 5.407)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.643086, 0.483442, 0.204557)
+
+[node name="Enemy" parent="." instance=ExtResource("4_tb54p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.7604, -0.576553, -9.48803)
+
+[node name="PauseMenu" parent="." instance=ExtResource("2_m0kdb")]
+visible = false
+offset_top = 1.0
+offset_right = 1.0
+offset_bottom = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1.31134e-07, 1, -4.37114e-08, 3.82137e-15, 4.37114e-08, 1, 1, -1.31134e-07, 1.91069e-15, -4.14197, 25.8897, -0.0632501)

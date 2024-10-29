@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://5w5iuhon7m5s"]
+
+[ext_resource type="Script" path="res://Script/enemy.gd" id="1_uwoe4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bl4r3"]
+albedo_color = Color(0.698039, 0.027451, 0.0784314, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0hg0c"]
+material = SubResource("StandardMaterial3D_bl4r3")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_synxq"]
+
+[sub_resource type="Curve3D" id="Curve3D_q1oc4"]
+
+[node name="Enemy" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_uwoe4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_0hg0c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_synxq")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 2.0
+path_height_offset = 0.1
+avoidance_enabled = true
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_q1oc4")
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]

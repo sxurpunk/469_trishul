@@ -1,0 +1,132 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn8dlc2586k3b"]
+
+[ext_resource type="Script" path="res://Script/testsettings.gd" id="1_oun2t"]
+[ext_resource type="FontFile" uid="uid://b1ksnwlob4wbc" path="res://Font/superstar_memesbruh03.ttf" id="2_p7lni"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oun2t")
+
+[node name="MainSettings" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleContainer" type="PanelContainer" parent="MainSettings"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainer" type="PanelContainer" parent="MainSettings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -342.0
+offset_top = -291.0
+offset_right = 342.0
+offset_bottom = 291.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainSettings/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainSettings/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 50
+text = "Video"
+
+[node name="FullscreenCheck" type="CheckBox" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 35
+text = "FullScreen"
+
+[node name="ScreenShakeCheck" type="CheckBox" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 35
+text = "Screen Shake"
+
+[node name="Label2" type="Label" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 50
+text = "Audio"
+
+[node name="Label3" type="Label" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 35
+text = "Master Volume"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MasterVolumeSlider" type="HSlider" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+value = 1.0
+
+[node name="Control" type="Control" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Seperator" type="Control" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 50
+text = "SFX Volume"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SfxVolumeSlider" type="HSlider" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 35
+text = "SFX Volume"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="KeybindingButton" type="Button" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_p7lni")
+theme_override_font_sizes/font_size = 50
+text = "Configure Keybinds"
+
+[node name="Control" type="Control" parent="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[connection signal="toggled" from="MainSettings/PanelContainer/MarginContainer/VBoxContainer/FullscreenCheck" to="." method="_on_fullscreen_check_toggled"]
+[connection signal="toggled" from="MainSettings/PanelContainer/MarginContainer/VBoxContainer/ScreenShakeCheck" to="." method="_on_screen_shake_check_toggled"]
+[connection signal="drag_ended" from="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/MasterVolumeSlider" to="." method="_on_master_volume_slider_drag_ended"]
+[connection signal="drag_ended" from="MainSettings/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_drag_ended"]
